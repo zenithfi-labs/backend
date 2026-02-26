@@ -1,0 +1,164 @@
+{
+    "info": {
+        "name": "Zenith Finance API",
+        "description": "API Collection for Zenith Finance Backend Endpoints. All environments are included in their respective folders.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "💻 Local Development (localhost:8080)",
+            "item": [
+                {
+                    "name": "Health Check (Root)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                ""
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Health Check (v1)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/v1/health",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "v1",
+                                "health"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Join Waitlist",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"founder@zenithfinance.xyz\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/v1/waitlist",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "v1",
+                                "waitlist"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "🌍 Production (api.zenithfi.xyz)",
+            "item": [
+                {
+                    "name": "Health Check (Root)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.zenithfi.xyz/",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "zenithfi",
+                                "xyz"
+                            ],
+                            "path": [
+                                ""
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Health Check (v1)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.zenithfi.xyz/api/v1/health",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "zenithfi",
+                                "xyz"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "health"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Join Waitlist",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"founder@zenithfinance.xyz\"\n}"
+                        },
+                        "url": {
+                            "raw": "https://api.zenithfi.xyz/api/v1/waitlist",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "zenithfi",
+                                "xyz"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "waitlist"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}

@@ -10,14 +10,19 @@ import { eq } from "drizzle-orm";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 
 const resolveMx = promisify(dns.resolveMx);
 
-// Basic health check
+// Root health check (Often used by Railway/AWS for base uptime monitoring)
+app.get("/", (req, res) => {
+    res.json({ status: "ok", service: "Zenith Finance API", version: "1.0" });
+});
+
+// Detailed API health check
 app.get("/api/v1/health", (req, res) => {
     res.json({ status: "ok", message: "Zenith API is operational" });
 });
@@ -69,5 +74,5 @@ app.post("/api/v1/waitlist", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`[INFO] Server listening on port ${PORT}`);
 });
