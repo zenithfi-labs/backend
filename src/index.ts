@@ -14,12 +14,12 @@ app.use(cors());
 app.use(express.json());
 
 // Basic health check
-app.get("/api/health", (req, res) => {
+app.get("/api/v1/health", (req, res) => {
     res.json({ status: "ok", message: "Zenith API is operational" });
 });
 
 // Join Waitlist API
-app.post("/api/waitlist", async (req, res) => {
+app.post("/api/v1/waitlist", async (req, res) => {
     try {
         const { email } = req.body;
 
