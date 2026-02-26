@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import dns from "dns";
+import { promisify } from "util";
 import { db } from "./db";
 import { waitlist } from "./db/schema";
 import { eq } from "drizzle-orm";
@@ -12,6 +14,8 @@ const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
+
+const resolveMx = promisify(dns.resolveMx);
 
 // Basic health check
 app.get("/api/v1/health", (req, res) => {
@@ -27,7 +31,27 @@ app.post("/api/v1/waitlist", async (req, res) => {
             return res.status(400).json({ error: "Email is required" });
         }
 
-        // Check if email already exists
+        // 1. Basic Syntax Validation (Regex)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: "Invalid email format" });
+        }
+
+        // 2. Prevent Disposable/Fake Domains (Optional hardcoded list, but DNS is better)
+        const domain = email.split("@")[1];
+
+        // 3. DNS MX Record Check (Ensure the domain can actually receive emails)
+        try {
+            const mxRecords = await resolveMx(domain);
+            if (!mxRecords || mxRecords.length === 0) {
+                return res.status(400).json({ error: "Email domain is invalid or cannot receive emails" });
+            }
+        } catch (dnsError) {
+            console.warn(`DNS check failed for domain ${domain}:`, dnsError);
+            return res.status(400).json({ error: "Invalid email domain (fake/unreachable)" });
+        }
+
+        // 4. Check if email already exists in DB
         const existing = await db.select().from(waitlist).where(eq(waitlist.email, email)).limit(1);
 
         if (existing.length > 0) {
